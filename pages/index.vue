@@ -13,9 +13,9 @@
         </v-btn>
       </v-toolbar>
       <v-list>
-        <v-list-item v-for="item in items" :key="item.name" @click="">
+        <v-list-item v-for="item in contacts" :key="item.name" @click="">
           <v-list-item-content>
-            <Contact :firstname=item.firstname :lastname=item.lastname></Contact>
+            <Contact :id=item.id></Contact>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -25,17 +25,18 @@
 
 <script>
   import Contact from "~/components/Contact";
+  import {mapGetters} from 'vuex';
+
   export default {
     components: {Contact},
-    data() {
-      return {
-        items: [
-          {firstname: 'Jason', lastname:'Oner'},
-          {firstname: 'Travis', lastname:'Howard'},
-          {firstname: 'Ali', lastname:'Connors'},
-          {firstname: 'Cindy', lastname:'Baker'},
-        ],
-      }
-    }
+    fetch(){
+      this.$store.dispatch('contacts/init');
+    },
+    computed:{
+      ...mapGetters({
+        contacts:'contacts/contacts'
+      }),
+    },
+
   }
 </script>
