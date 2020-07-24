@@ -15,7 +15,7 @@
       <v-list>
         <v-list-item v-for="item in items" :key="item.name" @click="">
           <v-list-item-content>
-            <v-list-item-title v-text="item.name"></v-list-item-title>
+            <Contact :firstname=item.firstname :lastname=item.lastname></Contact>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -24,14 +24,16 @@
 </template>
 
 <script>
+  import Contact from "~/components/Contact";
   export default {
+    components: {Contact},
     data() {
       return {
         items: [
-          {name: 'Jason Oner'},
-          {name: 'Travis Howard'},
-          {name: 'Ali Connors'},
-          {name: 'Cindy Baker'},
+          {firstname: 'Jason', lastname:'Oner'},
+          {firstname: 'Travis', lastname:'Howard'},
+          {firstname: 'Ali', lastname:'Connors'},
+          {firstname: 'Cindy', lastname:'Baker'},
         ],
       }
     }
