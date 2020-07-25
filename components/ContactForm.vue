@@ -69,7 +69,7 @@
     computed: {
       contact_copy()
       {
-        console.log("searching for id2:"+this.id);
+        console.log("searching for id:"+this.id);
         this.contact_local.firstname= this.firstname;
         this.contact_local.lastname = this.lastname;
         return this.contact_local;
