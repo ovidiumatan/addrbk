@@ -1,11 +1,16 @@
 export const state =()=>({
-  list:[],
+  list:[]
 })
 
 export const mutations={
   add(state,contact){
+    if (contact.id==null) {
+      console.log("creating id:"+contact.firstname)
+      contact["id"] = state.list.length + 1;
+    }
     state.list.push(contact);
     console.log("Contact was added to the store");
+    console.log(contact);
   },
 
   delete(state, contact){
@@ -23,25 +28,18 @@ export const mutations={
 
 export const getters={
 
-  contact:(state)=>(id)=>{
-    return state.list.filter((value)=>(value.id===id));
-  },
+  contact:(state)=>(id)=>(state.list.filter((value)=>(value.id===id)).slice(0)),
+  contacts:(state)=>(state.list.slice(0).sort((a, b) => ((''+a.firstname).localeCompare(b.firstname)))),
 
-  contacts(state){
-    let contacts=state.list.slice(0);
-    contacts.sort((a, b) => (a.id-b.id));
-    return contacts;
-
-  }
 }
 
 export const actions={
   init({commit}){
     console.log("adding initial data");
-    commit("add",{id:'1', firstname: 'Jason', lastname:'Oner'});
-    commit("add",{id:'2', firstname: 'Travis', lastname:'Howard'});
-    commit("add",{id:'3', firstname: 'Ali', lastname:'Connors'});
-    commit("add",{id:'4', firstname: 'Cindy', lastname:'Baker'});
+    commit("add",{firstname: 'Jason', lastname:'Oner'});
+    commit("add",{firstname: 'Travis', lastname:'Howard'});
+    commit("add",{firstname: 'Ali', lastname:'Connors'});
+    commit("add",{firstname: 'Cindy', lastname:'Baker'});
 
   },
   update({commit},contact){
