@@ -9,7 +9,7 @@
       <v-list v-if="contacts.length>0">
         <v-list-item  v-for="item in contacts" :key="item.name" @click="">
           <v-list-item-content>
-            <Contact :id=item.id :firstname=item.firstname :lastname=item.lastname></Contact>
+            <Contact :id=item.id :firstname=item.firstname :lastname=item.lastname :email=item.email></Contact>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -35,6 +35,5 @@
         contacts:'contacts/contacts'
       }),
     },
-
   }
 </script>

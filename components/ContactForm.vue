@@ -1,6 +1,5 @@
 <template>
   <v-dialog v-model="dialog" persistent max-width="600px">
-
     <template v-slot:activator="{on, attrs}">
       <v-btn style="!important;background-color: transparent"
              elevation="0"
@@ -34,6 +33,14 @@
             </v-col>
           </v-row>
 
+          <v-row>
+            <v-col>
+              <v-text-field
+                v-model="contact_copy.email"
+                label="Email"></v-text-field>
+            </v-col>
+          </v-row>
+
         </v-card-text>
         <v-card-actions>
           <v-btn elevation="0" @click="closeForm()">Cancel</v-btn>
@@ -56,30 +63,33 @@
 
 <script>
   export default {
-
     name: "ContactForm",
-    props: ['id', 'firstname', 'lastname'],
+    props: ['id', 'firstname', 'lastname', 'email'],
     data: () => ({
       dialog: false,
       contact_local:{
         firstname:'',
-        lastname:''
+        lastname:'',
+        email:''
       }
     }),
     computed: {
       contact_copy()
       {
-        console.log("searching for id:"+this.id);
+        console.log("searching for id:"+this.id+"--"+this.firstname);
         this.contact_local.firstname= this.firstname;
         this.contact_local.lastname = this.lastname;
+        this.contact_local.email = this.email;
         return this.contact_local;
       },
     },
 
     methods: {
       closeForm() {
-        this.contact_local.firstname='';
-        this.contact_local.lastname='';
+        console.log("clearing");
+        // this.contact_local.firstname='';
+        // this.contact_local.lastname='';
+        // this.contact_local.email='';
         this.dialog = false;
 
       },
@@ -92,11 +102,12 @@
         }
       },
       update() {
-        console.log("sending update to the store:" + this.id)
+        console.log("sending update to the store:" + this.id+"\\"+this.contact_local.firstname);
         this.$store.dispatch('contacts/update', {
           id: this.id,
           firstname: this.contact_local.firstname,
-          lastname: this.contact_local.lastname
+          lastname: this.contact_local.lastname,
+          email:this.contact_local.email
         });
         this.closeForm();
       },
@@ -104,7 +115,8 @@
         console.log("creating a new contact:" + this.fn + "/" + this.ln)
         this.$store.dispatch('contacts/add', {
           firstname: this.contact_local.firstname,
-          lastname: this.contact_local.lastname
+          lastname: this.contact_local.lastname,
+          email:this.contact_local.email
         });
         this.closeForm();
       },
